@@ -126,10 +126,18 @@ while run:
     down = min(views)
     for view in views:
         v1 = math.sqrt(scene_w ** 2 + scene_h ** 2)
-        v = (v1 - view) / v1
-        col = 255 * v
+        # Calculate distance to the segment as a proportion of the world size
+        distance = view / v1
+        # Use the inverse square law to calculate brightness
+        brightness = 0.03 / distance ** 2
+        # Correct for gamma and stop invalid (>255) colors
+        brightness = min(1, brightness ** (1 / 2.2))
+        color = [brightness * u for u in (255, 111, 105)]
+
         left = left - scene_w / len(views)
-        pygame.draw.rect(screen, (col, col * (111 / 255), col * (105 / 255)), (left, 250 - 200 * (v), scene_w / len(views) + 1, 400 * (v)))
+        height = 100 / distance
+        pygame.draw.rect(screen, color, (left, scene_h / 2 - height / 2, scene_w / len(views), height))
+
 
     pygame.draw.circle(screen, 	(150,206,180), (x_i, y_i), 20)
     face = angle + math.radians(20)
