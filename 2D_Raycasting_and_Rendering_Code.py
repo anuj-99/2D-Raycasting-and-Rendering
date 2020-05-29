@@ -135,7 +135,7 @@ while run:
         color = [brightness * u for u in (255, 111, 105)]
 
         left = left - scene_w / len(views)
-        height = 100 / distance
+        height = min(100 / distance, scene_h)
         pygame.draw.rect(screen, color, (left, scene_h / 2 - height / 2, scene_w / len(views), height))
 
 
