@@ -362,3 +362,6 @@ maze.make_maze()
 print(maze)
 maze.write_svg('maze.svg')
 
+
+
+   
